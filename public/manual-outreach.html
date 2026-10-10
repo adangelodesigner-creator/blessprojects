@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual de Outreach</title>
+<script>
+(function(){
+  var t = new URLSearchParams(location.search).get('theme');
+  if (t === 'dark') { document.documentElement.setAttribute('data-theme', 'dark'); }
+  else if (t === 'light') { document.documentElement.setAttribute('data-theme', 'light'); }
+  else {
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    document.documentElement.setAttribute('data-theme', mq.matches ? 'dark' : 'light');
+  }
+})();
+</script>
+<style>
+  :root,
+  [data-theme="light"] {
+    --bg: #ffffff;
+    --bg-alt: #f8f9fa;
+    --surface: #ffffff;
+    --surface-hover: #f1f3f5;
+    --border: #e9ecef;
+    --border-hover: #ced4da;
+    --text: #212529;
+    --text-secondary: #6c757d;
+    --text-tertiary: #adb5bd;
+    --accent: #3b82f6;
+    --accent-dim: rgba(59,130,246,0.1);
+    --green: #10b981;
+    --green-dim: rgba(16,185,129,0.1);
+    --pink: #ec4899;
+    --pink-dim: rgba(236,72,153,0.08);
+    --yellow: #eab308;
+    --yellow-dim: rgba(234,179,8,0.1);
+    --cyan: #06b6d4;
+    --cyan-dim: rgba(6,182,212,0.1);
+    --code-bg: #f1f3f5;
+    --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --topbar-bg: #ffffff;
+    --topbar-border: #e9ecef;
+    --hero-gradient: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  }
+  [data-theme="dark"] {
+    --bg: #0f1117;
+    --bg-alt: #181b23;
+    --surface: #1c1f2a;
+    --surface-hover: #262a36;
+    --border: #2a2e3a;
+    --border-hover: #3a3f4e;
+    --text: #e8eaed;
+    --text-secondary: #9aa0b0;
+    --text-tertiary: #5f6577;
+    --accent: #60a5fa;
+    --accent-dim: rgba(96,165,250,0.12);
+    --green: #34d399;
+    --green-dim: rgba(52,211,153,0.12);
+    --pink: #f472b6;
+    --pink-dim: rgba(244,114,182,0.1);
+    --yellow: #facc15;
+    --yellow-dim: rgba(250,204,21,0.1);
+    --cyan: #22d3ee;
+    --cyan-dim: rgba(34,211,238,0.1);
+    --code-bg: #262a36;
+    --shadow: 0 1px 2px rgba(0,0,0,0.2), 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
+    --radius: 10px;
+    --radius-sm: 6px;
+    --topbar-bg: #181b23;
+    --topbar-border: #2a2e3a;
+    --hero-gradient: linear-gradient(180deg, #181b23 0%, #0f1117 100%);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* HEADER */
+  .topbar {
+    background: var(--topbar-bg);
+    border-bottom: 1px solid var(--topbar-border);
+    padding: 0 24px;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .topbar-inner {
+    max-width: 860px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .topbar-brand {
+    font-weight: 700; font-size: 0.95rem;
+    display: flex; align-items: center; gap: 8px;
+    color: var(--text);
+  }
+  .topbar-brand svg { opacity: 0.8; }
+  .topbar-nav { display: flex; gap: 4px; flex-wrap: wrap; }
+  .topbar-nav a {
+    color: var(--text-secondary); text-decoration: none;
+    font-size: 0.75rem; font-weight: 500;
+    padding: 4px 10px; border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .topbar-nav a:hover { color: var(--text); background: var(--surface-hover); }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 48px 0 40px;
+    background: var(--hero-gradient);
+    margin: 0 -24px 0;
+    padding-left: 24px; padding-right: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .hero p { color: var(--text-secondary); font-size: 1rem; max-width: 560px; margin: 0 auto; }
+  .hero .badge-date {
+    display: inline-block;
+    background: var(--accent-dim); color: var(--accent);
+    font-size: 0.75rem; font-weight: 600;
+    padding: 4px 14px; border-radius: 20px;
+    margin-bottom: 16px;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-top: 48px;
+  }
+  .section-title {
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .num {
+    background: var(--accent); color: #fff;
+    font-size: 0.7rem; font-weight: 700;
+    width: 24px; height: 24px; border-radius: 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .section-sub { color: var(--text-tertiary); font-size: 0.88rem; margin-bottom: 20px; }
+
+  h2 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin: 28px 0 8px; }
+  h3 { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); margin: 20px 0 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  p { margin: 0 0 12px; color: var(--text-secondary); }
+  ul { margin: 0 0 16px 20px; }
+  li { margin-bottom: 6px; color: var(--text-secondary); }
+  a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  a:hover { text-decoration: underline; }
+  strong { color: var(--text); }
+  code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-size: 0.85em; }
+
+  /* PIPELINE VISUAL */
+  .pipeline { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 24px; }
+  .pipeline-step {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--surface-hover); border-radius: 20px;
+    padding: 6px 14px 6px 10px;
+    font-size: 0.78rem; font-weight: 600; color: var(--text-secondary);
+  }
+  .pipeline-step .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .pipeline-step.active { background: var(--accent-dim); color: var(--accent); }
+  .pipeline-step.active .dot { background: var(--accent); }
+  .pipeline-arrow { color: var(--text-tertiary); font-size: 0.85rem; }
+
+  /* RULES */
+  .rules-grid { display: grid; gap: 12px; margin: 16px 0; }
+  .rule-card {
+    background: var(--surface-hover);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    border-left: 4px solid var(--border);
+  }
+  .rule-card:nth-child(1) { border-left-color: var(--accent); }
+  .rule-card:nth-child(2) { border-left-color: var(--pink); }
+  .rule-card:nth-child(3) { border-left-color: var(--text); }
+  .rule-card .r-title { font-weight: 700; font-size: 0.9rem; color: var(--text); margin-bottom: 4px; }
+  .rule-card p { margin: 0; font-size: 0.88rem; }
+
+  /* SCRIPT CARDS */
+  .script-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin: 12px 0;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s, border-color 0.15s;
+  }
+  .script-card:hover { box-shadow: var(--shadow-md); border-color: var(--border-hover); }
+  .script-card .sc-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .script-card .sc-step {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 3px 10px; border-radius: 20px;
+    display: inline-block;
+  }
+  .script-card .sc-step.open { background: var(--accent-dim); color: var(--accent); }
+  .script-card .sc-step.value { background: var(--pink-dim); color: var(--pink); }
+  .script-card .sc-step.close { background: var(--text); color: var(--bg); }
+  .script-card .sc-title { font-weight: 600; font-size: 0.85rem; color: var(--text-secondary); }
+  .script-card .sc-text {
+    font-size: 0.93rem; color: var(--text);
+    padding: 10px 14px;
+    background: var(--code-bg);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--accent);
+    margin-top: 8px;
+  }
+  .script-card .sc-text a { color: var(--cyan); font-weight: 600; }
+
+  /* PRICING */
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  @media (max-width: 560px) { .pricing-grid { grid-template-columns: 1fr; } }
+  .price-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .price-card .amount {
+    font-size: 2rem; font-weight: 800; color: var(--text);
+    margin: 8px 0;
+  }
+  .price-card .amount span { font-size: 0.95rem; font-weight: 400; color: var(--text-tertiary); }
+  .price-card .desc { color: var(--text-secondary); font-size: 0.85rem; }
+  .price-card.featured {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent), var(--shadow-md);
+  }
+  .price-card.featured .amount { color: var(--accent); }
+  .price-card .tag {
+    display: inline-block;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 3px 12px; border-radius: 20px; margin-bottom: 6px;
+  }
+  .price-card .tag.rec { background: var(--accent-dim); color: var(--accent); }
+  .price-card .tag.proj { background: var(--surface-hover); color: var(--text-tertiary); }
+
+  /* COMMISSION */
+  .commission-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px;
+    margin: 16px 0;
+    box-shadow: var(--shadow);
+  }
+  .commission-bar .pct { font-size: 2rem; font-weight: 800; color: var(--accent); }
+  .commission-bar .pct span { font-size: 0.9rem; font-weight: 400; color: var(--text-tertiary); }
+  .commission-bar .example { font-size: 0.85rem; color: var(--text-secondary); }
+  .commission-bar .example strong { color: var(--text); }
+
+  /* WEEK PLAN */
+  .week-grid { display: grid; gap: 4px; margin: 16px 0; }
+  .week-row {
+    display: grid; grid-template-columns: 80px 1fr;
+    gap: 16px;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    transition: background 0.15s;
+    align-items: center;
+  }
+  .week-row:hover { background: var(--surface-hover); }
+  .week-row .day {
+    font-weight: 700; font-size: 0.85rem;
+    color: var(--text-tertiary); text-align: right;
+  }
+  .week-row .day span {
+    display: inline-block;
+    background: var(--border); color: var(--text-secondary);
+    font-weight: 700; font-size: 0.7rem;
+    width: 24px; height: 24px; line-height: 24px; text-align: center;
+    border-radius: 6px;
+    margin-right: 6px;
+  }
+  .week-row .desc { font-size: 0.88rem; color: var(--text-secondary); }
+  .week-row .desc strong { color: var(--text); }
+  .week-row.highlight { background: var(--accent-dim); border-radius: var(--radius-sm); }
+
+  /* APP USAGE */
+  .app-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+    margin: 12px 0;
+  }
+  .app-card .app-url {
+    display: inline-block;
+    background: var(--accent); color: #fff;
+    padding: 8px 18px; border-radius: var(--radius-sm);
+    font-weight: 600; font-size: 0.9rem;
+    margin: 8px 0 12px;
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .app-card .app-url:hover { opacity: 0.85; text-decoration: none; }
+  .app-card ul { margin-bottom: 0; }
+
+  /* METRICS */
+  .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0; }
+  .metric-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    text-align: center;
+  }
+  .metric-card .value { font-size: 1.5rem; font-weight: 800; color: var(--text); }
+  .metric-card .label { font-size: 0.78rem; color: var(--text-tertiary); margin-top: 2px; }
+
+  /* TIPS */
+  .tips-list { display: grid; gap: 8px; margin: 16px 0; }
+  .tip-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+  }
+  .tip-item .bullet {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    margin-top: 10px; flex-shrink: 0;
+  }
+  .tip-item p { margin: 0; font-size: 0.88rem; }
+
+  /* LEAD TABLE */
+  .lead-section { margin-top: 40px; }
+  .lead-section .section-title .num { background: var(--pink); }
+  .lead-table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin: 16px 0;
+  }
+  .lead-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .lead-table th {
+    text-align: left;
+    background: var(--surface-hover);
+    color: var(--text-tertiary);
+    font-weight: 600; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em;
+    padding: 12px 16px;
+  }
+  .lead-table td { padding: 11px 16px; border-bottom: 1px solid var(--border); }
+  .lead-table tr:last-child td { border-bottom: none; }
+  .lead-table tr:hover td { background: var(--surface-hover); }
+  .lead-table .lead-name { font-weight: 600; color: var(--text); }
+  .lead-table .lead-ig { color: var(--text-tertiary); font-size: 0.82rem; }
+  .lead-table .lead-angle { color: var(--text-secondary); font-size: 0.82rem; line-height: 1.4; }
+  .btn-dm {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--accent); color: #fff;
+    padding: 4px 14px; border-radius: 20px;
+    font-size: 0.72rem; font-weight: 700;
+    text-decoration: none;
+    transition: opacity 0.15s;
+    white-space: nowrap;
+  }
+  .btn-dm:hover { opacity: 0.85; text-decoration: none; }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    margin-top: 56px;
+    padding: 32px 0;
+    border-top: 1px solid var(--border);
+  }
+  .footer .tagline {
+    font-size: 1.3rem; font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .footer p { font-size: 0.85rem; color: var(--text-tertiary); margin: 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 1.6rem; }
+    .topbar-nav { display: none; }
+    .lead-table th, .lead-table td { padding: 8px 10px; font-size: 0.8rem; }
+    .container { padding: 0 16px 64px; }
+    .hero { padding: 32px 16px 28px; margin: 0 -16px 0; }
+  }
+  @media print {
+    body { background: #fff; }
+    .topbar { display: none; }
+    .hero { background: none; padding: 32px 0 24px; border: none; }
+    .hero h1 { color: #000; }
+    .container { padding: 0; }
+    .script-card, .price-card, .app-card, .lead-table-wrap { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-brand">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+      </svg>
+      Manual de Outreach
+    </div>
+    <div class="topbar-nav">
+      <a href="#metodologia">Método</a>
+      <a href="#guiones">Guiones</a>
+      <a href="#precios">Precios</a>
+      <a href="#semana1">Plan</a>
+      <a href="#app">App</a>
+      <a href="#tips">Tips</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge-date">Julio 2026</div>
+  <h1>Manual de Outreach</h1>
+  <p>Sistema de captación de clientes vía Instagram DM para <strong>Angelo Editor</strong></p>
+</div>
+
+<!-- ============================== -->
+<!-- METODOLOGÍA → MÉTODO MATCH™ -->
+<!-- ============================== -->
+<div class="section" id="metodologia">
+  <div class="section-title"><span class="num">1</span> Metodología — Método MATCH™</div>
+  <p class="section-sub">Basado en <strong>La Fábrica de Cierres</strong> de Manuel Trejo. Cada conversación con estructura, no improvisación.</p>
+
+  <div class="pipeline">
+    <div class="pipeline-step active"><span class="dot"></span>Nuevo</div>
+    <span class="pipeline-arrow">→</span>
+    <div class="pipeline-step"><span class="dot"></span>Contactado</div>
+    <span class="pipeline-arrow">→</span>
+    <div class="pipeline-step"><span class="dot"></span>Respondió</div>
+    <span class="pipeline-arrow">→</span>
+    <div class="pipeline-step"><span class="dot"></span>Interesado</div>
+    <span class="pipeline-arrow">→</span>
+    <div class="pipeline-step"><span class="dot"></span>Negociando</div>
+    <span class="pipeline-arrow">→</span>
+    <div class="pipeline-step"><span class="dot"></span>Ganado</div>
+  </div>
+
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="r-title">M — Preguntas que Condicionan, Orientan y Abren</div>
+      <p>No preguntes <em>"¿te interesa?"</em> (invita al "no"). Pregunta para CONDICIONAR: <em>"Si pudieras liberar X horas a la semana, ¿te serviría?"</em> → ORIENTAR: <em>"¿Cómo gestionan la edición hoy?"</em> → ABRIR: <em>"¿Qué es lo más importante al elegir un editor?"</em>. Tú guías, no el cliente.</p>
+    </div>
+    <div class="rule-card">
+      <div class="r-title">A — Argumenta Beneficios, No Características</div>
+      <p>Al cliente no le importa que edites en Premiere o que tengas x años de experiencia. Le importa: liberar tiempo, escalar sin contratar, consistencia en el estilo, ganar más dinero. Comunica los 5 problemas reales que resuelves, no las features de tu servicio.</p>
+    </div>
+    <div class="rule-card">
+      <div class="r-title">T — Cierre por Conclusión (No Pidas Permiso)</div>
+      <p>Elimina frases de modestia excesiva: <em>"avísame cuando decidas"</em>, <em>"cualquier cosa me dices"</em>, <em>"sin compromiso"</em>. Usa lenguaje que AVANZA: <em>"Entonces te confirmo que arrancamos esta semana."</em> El cliente prefiere que le guíes.</p>
+    </div>
+    <div class="rule-card">
+      <div class="r-title">C — Conversación Estructurada</div>
+      <p>Cada etapa de la conversación tiene un objetivo. No saltas de apertura a propuesta. Primero diagnóstico, luego valor, luego objeción, luego cierre. Sistema replicable que no depende del talento innato.</p>
+    </div>
+    <div class="rule-card">
+      <div class="r-title">H — Handling Objeciones (Valida → Precisar → Evidenciar → Acordar)</div>
+      <p>La objeción es una señal de interés disfrazada de resistencia. No rebatas. VALIDA: <em>"Tiene sentido que quieras asegurarte"</em> → PRECISA: <em>"¿Qué parte exactamente te genera duda?"</em> → EVIDENCIA: caso o resultado concreto → ACUERDA: <em>"Si resolvemos X, ¿avanzamos?"</em></p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- GUIONES -->
+<!-- ============================== -->
+<div class="section" id="guiones">
+  <div class="section-title"><span class="num">2</span> Guiones por etapa</div>
+  <p class="section-sub">Cada lead en la app muestra el guión correspondiente a su etapa actual. Botón "Copiar guión".</p>
+
+  <!-- Apertura — Pregunta que CONDICIONA + ORIENTA -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step open">M · Apertura MATCH</span>
+      <span class="sc-title">Nuevo → Contactado</span>
+    </div>
+    <div class="sc-text">"[nombre], veo que manejan cuentas con bastante contenido. Una pregunta: ¿cómo gestionan hoy la edición de reels con el volumen que tienen?"</div>
+  </div>
+
+  <!-- Alternativa 1 — Editan internamente → Pregunta que ABRE -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step value">A · Alternativa</span>
+      <span class="sc-title">Si editan ellos → Abrir posibilidad</span>
+    </div>
+    <div class="sc-text">"Tiene sentido. Muchas agencias empiezan así. El tema es que cuando una cuenta empieza a pedir 8-10 reels al mes, la edición empieza a competir con el tiempo de conseguir nuevos clientes. Justo por eso te escribo: trabajo con agencias como partner de edición para que ustedes se enfoquen en vender y yo me encargo del resto. Si te sirve, te comparto mi portafolio para que veas el estilo."</div>
+  </div>
+
+  <!-- Alternativa 2 — Ya tercerizan → Pregunta que ORIENTA -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step value">A · Alternativa</span>
+      <span class="sc-title">Si ya tercerizan → Entender su situación</span>
+    </div>
+    <div class="sc-text">"Perfecto. ¿Y cómo ha sido la experiencia con tu editor actual? Pregunto porque trabajo con agencias como partner white-label y lo que más valoran es la consistencia en el estilo y poder escalar sin depender de una sola persona. ¿Te comparto mi portafolio para que veas si el estilo resuena?"</div>
+  </div>
+
+  <!-- Enviar portafolio / ejemplos — Cierre por Conclusión -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step value">T · Portafolio</span>
+      <span class="sc-title">Contactado → Respondió</span>
+    </div>
+    <div class="sc-text">"Te comparto mi portafolio con ejemplos de lo que hago para agencias similares a la tuya. Míralo con calma y dime si el estilo resuena con lo que necesitas: <a href="https://angelo-editor.vercel.app" target="_blank">angelo-editor.vercel.app</a>. Si te gusta, agendamos una llamada de 10 min para entender tu flujo y ver cómo puedo ayudarte."</div>
+  </div>
+
+  <!-- Pide precios directo → Redirigir al valor -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step value">Alternativa</span>
+      <span class="sc-title">Si pregunta precio directo → No cotices sin contexto</span>
+    </div>
+    <div class="sc-text">"Claro, déjame darte contexto: los precios dependen del volumen que manejes. La mayoría de agencias con las que trabajo empiezan con un plan mensual que les sale más económico que por unidad. Antes de dartelos, dime — ¿cuántos reels manejas al mes aprox? Así te recomiendo lo que mejor se ajuste."</div>
+  </div>
+
+  <!-- Propuesta formal — Cierre por Conclusión -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step value">T · Propuesta</span>
+      <span class="sc-title">Interesado → Negociando</span>
+    </div>
+    <div class="sc-text">"Te armé la propuesta basada en lo que me comentaste. Acá están los entregables, tiempos y precios. Revísala y dime: ¿hay algo que ajustar o podemos avanzar con el primer cliente?"</div>
+  </div>
+
+  <!-- Seguimiento sin respuesta — Cierre por Conclusión -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step open">Follow-up</span>
+      <span class="sc-title">Si no responde en 48h</span>
+    </div>
+    <div class="sc-text">"Hola [nombre], quería confirmar si alcanzaste a ver el portafolio. Si el estilo no es lo que buscas, también me dices — sin problema. ¿Prefieres que agendemos una llamada rápida para que te muestre cómo trabajo?"</div>
+  </div>
+
+  <!-- Objeción: "ahora no" — Validar + Dejar puerta abierta con conclusión -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step value">H · Objeción</span>
+      <span class="sc-title">"Ahora no tenemos presupuesto / tiempo"</span>
+    </div>
+    <div class="sc-text">"Lo entiendo perfectamente. Dime una cosa — ¿en cuánto tiempo estimas que podrían retomarlo? Así agendo un recordatorio y te escribo justo cuando tenga sentido para ustedes, sin molestar antes."</div>
+  </div>
+
+  <!-- Objeción: "ya tenemos editor" — Validar + Precisar + Dejar abierto -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step value">H · Objeción</span>
+      <span class="sc-title">"Ya trabajamos con alguien"</span>
+    </div>
+    <div class="sc-text">"Qué bueno, me alegra que tengan a alguien de confianza. ¿Y cómo va el volumen? Porque si en algún momento tu editor actual no da abasto o necesitan una segunda línea para cubrir más cuentas, me avisas y te comparto mi portafolio. Así ya tienes la opción si la necesitas."</div>
+  </div>
+
+  <!-- Objeción: "mándame info" — No solo enviar, guiar al siguiente paso -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step value">H · Objeción</span>
+      <span class="sc-title">"Mándame info por correo / WhatsApp"</span>
+    </div>
+    <div class="sc-text">"Claro, te comparto el portafolio con precios de referencia. Una vez lo veas, coordinamos una llamada de 10 min para ver si el estilo encaja con lo que necesitas. Dime tu correo y te lo envío."</div>
+  </div>
+
+  <!-- Objeción: "me parece caro" — Validar + Precisar + Evidenciar + Acordar -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step value">H · Objeción</span>
+      <span class="sc-title">"Está caro" / Objeción de precio</span>
+    </div>
+    <div class="sc-text">"Tiene sentido que quieras asegurarte de que la inversión sea la correcta. Déjame preguntarte: ¿cuántos reels manejas al mes? Porque la mayoría de agencias con las que trabajo me dicen que el costo real no es el reel, sino las horas que dejan de dedicar a conseguir clientes. Si te ayudo a liberar ese tiempo, el retorno se paga solo. ¿Cuántos reels sueles sacar por cliente?"</div>
+  </div>
+
+  <!-- Cierre — Cierre por Conclusión (no pides permiso, avanzas) -->
+  <div class="script-card">
+    <div class="sc-header">
+      <span class="sc-step close">T · Cierre por Conclusión</span>
+      <span class="sc-title">Negociando → Ganado</span>
+    </div>
+    <div class="sc-text">"Perfecto. Entonces te confirmo disponibilidad para arrancar esta semana. Dame acceso al material del primer cliente y te entrego el primer reel en 48h para que veas la calidad. Una vez lo apruebes, definimos el volumen mensual y arrancamos formalmente."</div>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- PRECIOS -->
+<!-- ============================== -->
+<div class="section" id="precios">
+  <div class="section-title"><span class="num">3</span> Precios</div>
+  <p class="section-sub">Precios base: reel $30 · VSL (hasta 3min) $100 · De ahí se escala.</p>
+
+  <div class="pricing-grid">
+    <div class="price-card featured">
+      <div class="tag rec">Básico</div>
+      <div class="amount">$100 <span>/mes</span></div>
+      <div class="desc">4 reels · Ahorras $20</div>
+    </div>
+    <div class="price-card featured">
+      <div class="tag rec">Profesional</div>
+      <div class="amount">$400 <span>/mes</span></div>
+      <div class="desc">8 reels + 2 VSL · Ahorras $40</div>
+    </div>
+    <div class="price-card featured">
+      <div class="tag rec">Premium</div>
+      <div class="amount">$700 <span>/mes</span></div>
+      <div class="desc">12 reels + 4 VSL · Ahorras $80</div>
+    </div>
+    <div class="price-card">
+      <div class="tag proj">Sueltos</div>
+      <div class="amount">$30 / $100</div>
+      <div class="desc">Reel individual · VSL corto (hasta 3min)</div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--text-tertiary);margin-top:12px;">
+    VSL de más de 3min se cotiza por separado. Agencias white-label: descuento por volumen según negociación.
+  </p>
+</div>
+
+<!-- ============================== -->
+<!-- COMISIONES -->
+<!-- ============================== -->
+<div class="section" id="comisiones">
+  <div class="section-title"><span class="num">4</span> Comisiones</div>
+
+  <div class="commission-bar">
+    <div>
+      <div class="pct">20% <span>del deal cerrado</span></div>
+    </div>
+    <div>
+      <div class="example">Pack Profesional $400 → <strong>$80 para ti</strong></div>
+      <div class="example" style="margin-top:4px;">Se paga cuando Angelo cobra al cliente</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- SEMANA 1 -->
+<!-- ============================== -->
+<div class="section" id="semana1">
+  <div class="section-title"><span class="num">5</span> Plan Semana 1</div>
+  <p class="section-sub">Objetivo: Cerrar al menos 1 cliente en 7 días.</p>
+
+  <div class="week-grid">
+    <div class="week-row highlight">
+      <div class="day"><span>1</span> Lun</div>
+      <div class="desc"><strong>Aperturas</strong> — DM a 5 leads prioritarios con guión de apertura. Marcar "Contactado".</div>
+    </div>
+    <div class="week-row">
+      <div class="day"><span>2</span> Mar</div>
+      <div class="desc"><strong>Aperturas + Seguimiento</strong> — DM a los otros 5. Revisar respuestas del Día 1.</div>
+    </div>
+    <div class="week-row">
+      <div class="day"><span>3</span> Mié</div>
+      <div class="desc"><strong>Ejemplos</strong> — Enviar portafolio a quienes respondieron. Reenviar a quienes no.</div>
+    </div>
+    <div class="week-row">
+      <div class="day"><span>4</span> Jue</div>
+      <div class="desc"><strong>Propuestas</strong> — Enviar precios y proponer llamada corta.</div>
+    </div>
+    <div class="week-row">
+      <div class="day"><span>5</span> Vie</div>
+      <div class="desc"><strong>Seguimiento</strong> — Hacer llamadas. Mantener cálidos a los indecisos.</div>
+    </div>
+    <div class="week-row">
+      <div class="day"><span>6</span> Sáb</div>
+      <div class="desc"><strong>Negociación</strong> — Cerrar detalles. Enviar propuesta formal.</div>
+    </div>
+    <div class="week-row highlight">
+      <div class="day"><span>7</span> Dom</div>
+      <div class="desc"><strong>Cierre</strong> — Confirmar inicio. Marcar como Ganado en la app.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- APP -->
+<!-- ============================== -->
+<div class="section" id="app">
+  <div class="section-title"><span class="num">6</span> Cómo usar BlessProjects</div>
+
+  <div class="app-card">
+    <a class="app-url" href="https://blessprojects.vercel.app" target="_blank">blessprojects.vercel.app</a>
+    <ul>
+      <li>Ir a sección <strong>Outreach</strong> (ícono de avión de papel)</li>
+      <li>Los leads aparecen en columnas por etapa</li>
+      <li>Click en un lead → modal con datos + guión + botón "Copiar guión"</li>
+      <li>Click <strong>"Avanzar"</strong> → pasa al siguiente estado automáticamente</li>
+      <li>Los botones DM abren Instagram directo al perfil/chat del lead</li>
+      <li>Cada quien ve solo sus leads asignados</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- METAS -->
+<!-- ============================== -->
+<div class="section">
+  <div class="section-title"><span class="num">7</span> Metas semanales</div>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="value">10</div>
+      <div class="label">DMs enviados / semana</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">≥ 40%</div>
+      <div class="label">Reply rate</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">1</div>
+      <div class="label">Llamada o propuesta / semana</div>
+    </div>
+    <div class="metric-card">
+      <div class="value">1</div>
+      <div class="label">Cliente cerrado cada 2-3 sem</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== -->
+<!-- TIPS -->
+<!-- ============================== -->
+<div class="section" id="tips">
+  <div class="section-title"><span class="num">8</span> Tips</div>
+
+  <div class="tips-list">
+    <div class="tip-item"><span class="bullet"></span><p><strong>M —</strong> Abre con pregunta que CONDICIONA, no con "¿te interesa?"</p></div>
+    <div class="tip-item"><span class="bullet"></span><p><strong>A —</strong> Habla de tiempo recuperado y clientes retenidos, no de "edito en Premiere"</p></div>
+    <div class="tip-item"><span class="bullet"></span><p><strong>T —</strong> Nunca termines con "avísame cuando decidas" — siempre un siguiente paso concreto</p></div>
+    <div class="tip-item"><span class="bullet"></span><p><strong>C —</strong> No saltes etapas: diagnóstico → valor → objeción → cierre. En ese orden</p></div>
+    <div class="tip-item"><span class="bullet"></span><p><strong>H —</strong> La objeción es señal de interés. Valida primero, rebate después</p></div>
+    <div class="tip-item"><span class="bullet"></span><p>1 solo follow-up si no responde (espera 48h). En el follow-up, da un paso adelante, no repitas</p></div>
+    <div class="tip-item"><span class="bullet"></span><p>Actualiza el estado en la app <strong>inmediatamente</strong> después de cada acción</p></div>
+    <div class="tip-item"><span class="bullet"></span><p>Si dice "ahora no": pregunta cuándo tener sentido retomarlo — así vuelves en el momento justo</p></div>
+    <div class="tip-item"><span class="bullet"></span><p>Las llamadas cortas (10-15 min) cierran más que los textos largos. Siempre proponer llamado</p></div>
+  </div>
+</div>
+
+<!-- ============================== -->
+
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="tagline">¡A cerrar!</div>
+  <p>Cada DM acerca un cliente más. Sigue el sistema, actualiza la app, y las comisiones llegan solas.</p>
+  <p style="margin-top:8px;">Angelo Editor © 2026</p>
+</div>
+
+</div>
+
+</body>
+</html>

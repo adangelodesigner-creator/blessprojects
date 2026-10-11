@@ -152,11 +152,27 @@ alter table public.financial_entries enable row level security;
 alter table public.invoices          enable row level security;
 alter table public.project_files     enable row level security;
 
+-- Helper: evita recursión infinita al consultar profiles dentro de policies de profiles
+create or replace function public.is_admin()
+returns boolean
+language sql
+security definer
+set search_path = public
+stable
+as $$
+  select exists (
+    select 1 from public.profiles
+    where id = auth.uid() and role = 'admin'
+  );
+$$;
+revoke execute on function public.is_admin() from anon;
+grant execute on function public.is_admin() to authenticated;
+
 -- Profiles: admins read all, users read own
 create policy "profiles select" on public.profiles
   for select using (
     auth.uid() = id
-    or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
+    or public.is_admin()
   );
 
 -- Brothers need to see other profiles for ShareProjectModal
@@ -196,10 +212,10 @@ create policy "own files" on public.project_files
 create policy "own leads" on public.leads
   for all using (
     auth.uid() = user_id
-    or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
+    or public.is_admin()
   ) with check (
     auth.uid() = user_id
-    or exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
+    or public.is_admin()
   );
 
 -- ---------- STORAGE ----------

@@ -52,39 +52,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <>
-      <nav className="rail" aria-label="Navegación rápida">
-        <div className="rail-logo">B</div>
-        {nav.map(({ id, label, Icon }) => (
-          <button
-            key={`rail-${id}`}
-            className={`rail-btn ${currentTab === id ? 'active' : ''}`}
-            onClick={() => handleNav(id)}
-            title={label}
-            aria-label={label}
-          >
-            <Icon size={18} />
-          </button>
-        ))}
-        {isAdmin && (
-          <button
-            className={`rail-btn ${currentTab === 'settings' ? 'active' : ''}`}
-            onClick={() => handleNav('settings')}
-            title="Ajustes"
-            aria-label="Ajustes"
-          >
-            <Settings size={18} />
-          </button>
-        )}
-        <div className="rail-spacer" />
-        <button
-          className="rail-btn"
-          onClick={onToggleTheme}
-          title={theme === 'dark' ? 'Modo Claro' : 'Modo Oscuro'}
-          aria-label={theme === 'dark' ? 'Modo Claro' : 'Modo Oscuro'}
-        >
-          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-        </button>
-      </nav>
       <div className={`mobile-overlay ${mobileOpen ? 'show' : ''}`} onClick={onCloseMobile} />
       <aside className={`sidebar ${collapsed ? 'collapsed' : ''} ${mobileOpen ? 'open' : ''}`}>
         <div className="sidebar-header">

@@ -42,7 +42,7 @@ export default function App() {
   const { user, loading: authLoading, signIn, signOut, resetPassword } = useAuth();
 
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    return (localStorage.getItem('gp_theme') as 'light' | 'dark') || 'dark';
+    return (localStorage.getItem('gp_theme') as 'light' | 'dark') || 'light';
   });
 
   useEffect(() => {
